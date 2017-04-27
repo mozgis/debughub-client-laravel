@@ -1,0 +1,12 @@
+{
+    "name": "debughub/client",
+    "description": "Debughub client",
+    "authors": [
+        {
+            "name": "Janis Mozgis",
+            "email": "janismozgis@gmail.com"
+        }
+    ],
+    "require": {
+    }
+}
