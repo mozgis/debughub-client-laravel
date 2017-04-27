@@ -10,7 +10,7 @@ use Illuminate\Contracts\Routing\TerminableMiddleware;
 use Debughub\Client\Middleware\SendData;
 
 
-class LdebugServiceProvider extends ServiceProvider
+class DebughubServiceProvider extends ServiceProvider
 {
 
     private $config;
@@ -40,15 +40,15 @@ class LdebugServiceProvider extends ServiceProvider
 
     private function configure()
     {
-        $config = realpath(__DIR__.'/../config/ldebugger.php');
-        $this->mergeConfigFrom($config, 'ldebugger');
+        $config = realpath(__DIR__.'/../config/debughub.php');
+        $this->mergeConfigFrom($config, 'debughub');
 
         $this->config = new Config();
-        $this->config->setApiKey($this->app->config->get('ldebugger.api_key'));
-        $this->config->setProjectKey($this->app->config->get('ldebugger.project_key'));
-        $this->config->setEndpoint($this->app->config->get('ldebugger.endpoint'));
-        $this->config->setGitRoot($this->app->config->get('ldebugger.git_root'));
-        $this->config->setBlacklistParams($this->app->config->get('ldebugger.blacklist_params'));
+        $this->config->setApiKey($this->app->config->get('debughub.api_key'));
+        $this->config->setProjectKey($this->app->config->get('debughub.project_key'));
+        $this->config->setEndpoint($this->app->config->get('debughub.endpoint'));
+        $this->config->setGitRoot($this->app->config->get('debughub.git_root'));
+        $this->config->setBlacklistParams($this->app->config->get('debughub.blacklist_params'));
 
     }
 
