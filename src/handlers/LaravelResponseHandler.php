@@ -23,8 +23,11 @@ class LaravelResponseHandler extends ResponseHandler
             $this->parseView($data);
         });
 
-        $app['events']->listen('*', function ($event, $data) {
-          if ($event == 'Illuminate\Foundation\Http\Events\RequestHandled') {
+        $this->response = '';
+        $this->headers = [];
+        $this->response_code = '';
+        $app['events']->listen('*', function ($event, $data = null) {
+          if ($event == 'Illuminate\Foundation\Http\Events\RequestHandled' && $data) {
             $request = $data[0];
             $maxLength = 1000;
             if (strlen($request->response->getContent()) > $maxLength) {
