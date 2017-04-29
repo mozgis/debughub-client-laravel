@@ -1,7 +1,5 @@
 <?php
-
 namespace Debughub\Client;
-
 
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Facades\Response;
@@ -24,8 +22,6 @@ class LaravelResponseHandler extends ResponseHandler
         });
 
         $this->response = '';
-        $this->headers = [];
-        $this->response_code = '';
         $app['events']->listen('*', function ($event, $data = null) {
           if ($event == 'Illuminate\Foundation\Http\Events\RequestHandled' && $data) {
             $request = $data[0];
@@ -36,8 +32,6 @@ class LaravelResponseHandler extends ResponseHandler
               $data = $request->response->getContent();
             }
             $this->response = $data;
-            $this->headers = headers_list();
-            $this->response_code = $request->response->getStatusCode();
           }
 
         });

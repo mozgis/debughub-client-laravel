@@ -15,7 +15,9 @@ class LaravelRequestHandler extends RequestHandler
         $this->params = $app['request']->all();
         $this->headers = $app['request']->header();
         $this->method = strtolower($app['request']->server('REQUEST_METHOD'));
-        $this->route = $app['router']->current();
         $this->url = $app['request']->url();
+        $app['events']->listen('Illuminate\Routing\Events\RouteMatched', function($event) {
+            $this->route = $event->route->uri;
+        });
     }
 }

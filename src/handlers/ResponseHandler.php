@@ -1,8 +1,5 @@
 <?php
-
 namespace Debughub\Client;
-
-
 
 class ResponseHandler implements Reportable
 {
@@ -23,12 +20,13 @@ class ResponseHandler implements Reportable
     public function getData()
     {
         $this->getGitBranchName();
+
         return [
             'response' => $this->response,
             'views' => $this->views,
-            'headers' => $this->headers,
+            'headers' => headers_list(),
             'git_branch_name' => $this->gitBranchName,
-            'response_code' => $this->response_code,
+            'response_code' => http_response_code(),
         ];
     }
 
