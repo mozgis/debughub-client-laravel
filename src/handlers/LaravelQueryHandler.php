@@ -21,6 +21,7 @@ class LaravelQueryHandler extends QueryHandler
             'data' => $event->bindings,
             'duration' => $event->time,
             'end_time' => microtime(),
+            'connection' => $event->connection->getDatabaseName(),
           ];
           $this->queries[] = $data;
         });
