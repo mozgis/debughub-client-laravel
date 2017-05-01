@@ -27,7 +27,17 @@ class Debugger
 
     public function registerShutdown()
     {
-       register_shutdown_function([$this, 'sendData']);
+      register_shutdown_function(function(){
+        $payload = $this->createPayload();
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $this->config->getEndpoint());
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($payload));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_exec ($ch);
+        curl_close ($ch);
+      });
     }
 
     private function createPayload()
@@ -52,19 +62,6 @@ class Debugger
           'api_key' => $this->config->getApiKey(),
           'project_key' => $this->config->getProjectKey(),
         ];
-    }
-
-    public function sendData()
-    {
-        $payload = $this->createPayload();
-
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $this->config->getEndpoint());
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($payload));
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_exec ($ch);
-        curl_close ($ch);
     }
 
     private function microtimeFloat($time)

@@ -17,7 +17,7 @@ class LaravelDebugger
         $debugger = new Debugger($config);
         $debugger->queryHandler = new LaravelQueryHandler($this->app);
         $debugger->logHandler = new LogHandler();
-        $debugger->exceptionHandler = new ExceptionHandler();
+        $debugger->exceptionHandler = new LaravelExceptionHandler($this->app);
         $debugger->requestHandler = new LaravelRequestHandler($config, $this->app);
         $debugger->responseHandler = new LaravelResponseHandler($config, $this->app);
         $debugger->registerShutdown();

@@ -3,20 +3,9 @@
 namespace Debughub\Client;
 
 
-
 class ExceptionHandler implements Reportable
 {
-    private $exceptions = [];
-
-    public function __construct()
-    {
-      $this->addExceptionListener();
-    }
-
-    private function addExceptionListener()
-    {
-
-    }
+    public $exceptions = [];
 
     public function getData()
     {
