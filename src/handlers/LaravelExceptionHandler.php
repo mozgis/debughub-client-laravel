@@ -16,22 +16,18 @@ class LaravelExceptionHandler extends ExceptionHandler
 
         //listener for error events
         $app['events']->listen('*', function($event, $data = null) {
-          //for laravel 5.2
           if ($event == 'error') {
             $this->exceptions[] = $this->parseError($data);
-          }
-          //for laravel 5.4+
-          if ($event == 'Illuminate\Foundation\Http\Events\RequestHandled') {
-            //if exception is found, add it to the stack
-            if ($data[0]->response->exception) {
-              $this->exceptions[] = $this->parseError($data[0]->response->exception);
-            }
           }
         });
     }
 
     public function parseError($data) {
       $errorTrace = [];
+      $traces = [];
+      if (method_exists($data, 'getTrace')) {
+        $traces = $data->getTrace();
+      }
       foreach ($data->getTrace() as $trace) {
         $errorTrace[] = [
           'file' => isset($trace['file']) ? $trace['file'] : '',
@@ -41,12 +37,32 @@ class LaravelExceptionHandler extends ExceptionHandler
           'type' => isset($trace['type']) ? $trace['type'] : '',
         ];
       }
+      $message = '';
+      if (method_exists($data, 'getMessage')) {
+        $message = $data->getMessage();
+      }
+      $file = '';
+      if (method_exists($data, 'getFile')) {
+        $file = $data->getFile();
+      }
+      $code = '';
+      if (method_exists($data, 'getCode')) {
+        $code = $data->getCode();
+      }
+      $line = '';
+      if (method_exists($data, 'getLine')) {
+        $line = $data->getLine();
+      }
+      $severity = '';
+      if (method_exists($data, 'getSeverity')) {
+        $severity = $data->getSeverity();
+      }
       return [
-        'message' => $data->getMessage(),
-        'file' => $data->getFile(),
-        'code' => $data->getCode(),
-        'line' => $data->getLine(),
-        'severity' => $data->getSeverity(),
+        'message' => $message,
+        'file' => $file,
+        'code' => $code,
+        'line' => $line,
+        'severity' => $severity,
         'trace' => $errorTrace,
         'end_time' => microtime()
       ];
