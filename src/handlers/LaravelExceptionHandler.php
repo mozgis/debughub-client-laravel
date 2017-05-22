@@ -15,7 +15,7 @@ class LaravelExceptionHandler extends ExceptionHandler
         $this->app = $app;
 
         //listener for error events
-        $app['events']->listen('*', function($event, $data = null) {
+        $app['events']->listen('*', function($event = null, $data = null) {
           if ($event == 'error') {
             $this->exceptions[] = $this->parseError($data);
           }
