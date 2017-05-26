@@ -4,6 +4,7 @@ namespace Debughub\Client\Handlers;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\View;
+use Debughub\Client\Config;
 
 class LaravelResponseHandler extends ResponseHandler
 {

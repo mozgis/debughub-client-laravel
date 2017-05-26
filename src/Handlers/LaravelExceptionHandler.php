@@ -2,7 +2,6 @@
 
 namespace Debughub\Client\Handlers;
 
-
 use Illuminate\Contracts\Foundation\Application;
 
 class LaravelExceptionHandler extends ExceptionHandler

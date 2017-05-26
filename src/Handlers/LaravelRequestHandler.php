@@ -2,8 +2,9 @@
 
 namespace Debughub\Client\Handlers;
 
-
 use Illuminate\Contracts\Foundation\Application;
+use Debughub\Client\Config;
+
 
 class LaravelRequestHandler extends RequestHandler
 {

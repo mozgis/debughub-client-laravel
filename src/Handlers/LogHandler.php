@@ -2,6 +2,8 @@
 
 namespace Debughub\Client\Handlers;
 
+use Debughub\Client\Reportable;
+
 class LogHandler implements Reportable
 {
 

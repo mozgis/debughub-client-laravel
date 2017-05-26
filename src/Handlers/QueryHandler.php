@@ -2,6 +2,7 @@
 
 namespace Debughub\Client\Handlers;
 
+use Debughub\Client\Reportable;
 
 class QueryHandler implements Reportable
 {

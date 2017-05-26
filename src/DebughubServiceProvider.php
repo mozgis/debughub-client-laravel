@@ -6,8 +6,6 @@ use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Routing\Route;
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Contracts\Routing\TerminableMiddleware;
-use Debughub\Client\Middleware\SendData;
 
 
 class DebughubServiceProvider extends ServiceProvider
@@ -32,8 +30,8 @@ class DebughubServiceProvider extends ServiceProvider
     public function register()
     {
         $this->configure();
-
         new LaravelDebugger($this->app, $this->config);
+
 
 
     }

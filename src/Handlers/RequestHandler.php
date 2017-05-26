@@ -2,6 +2,8 @@
 
 namespace Debughub\Client\Handlers;
 
+use Debughub\Client\Reportable;
+use Debughub\Client\Config;
 
 
 class RequestHandler implements Reportable
