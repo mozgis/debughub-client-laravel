@@ -1,6 +1,6 @@
 <?php
 
-namespace Debughub\Client;
+namespace Debughub\Client\Handlers;
 
 
 use Illuminate\Contracts\Foundation\Application;

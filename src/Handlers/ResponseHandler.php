@@ -1,5 +1,5 @@
 <?php
-namespace Debughub\Client;
+namespace Debughub\Client\Handlers;
 
 class ResponseHandler implements Reportable
 {

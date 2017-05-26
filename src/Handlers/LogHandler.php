@@ -1,6 +1,6 @@
 <?php
 
-namespace Debughub\Client;
+namespace Debughub\Client\Handlers;
 
 class LogHandler implements Reportable
 {
