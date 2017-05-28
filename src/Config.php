@@ -10,6 +10,7 @@ class Config
     private $endpoint;
     private $gitRoot;
     private $blacklistParams;
+    private $enabled;
 
     public function setApiKey($key)
     {
@@ -31,8 +32,10 @@ class Config
     {
         $this->blacklistParams = $params;
     }
-
-
+    public function setEnabled($enabled)
+    {
+        $this->enabled = $enabled;
+    }
 
     public function getApiKey()
     {
@@ -54,4 +57,9 @@ class Config
     {
         return $this->blacklistParams;
     }
+    public function getEnabled()
+    {
+        return $this->enabled;
+    }
+
 }

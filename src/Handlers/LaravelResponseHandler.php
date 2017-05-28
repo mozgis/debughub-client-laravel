@@ -17,15 +17,19 @@ class LaravelResponseHandler extends ResponseHandler
         $this->app = $app;
 
 
-        //listener for view events
-        $app['events']->listen('composing:*', function ($view, $data) {
-            $this->parseView($data);
+//        listener for view events
+        $app['events']->listen('composing:*', function ($view = null, $data = null) {
+            if (is_a($view, \Illuminate\View\View::class)){
+                $this->parseView($view);
+            } else {
+                $this->parseView($data);
+            }
         });
 
         $this->response = '';
-        $app['events']->listen('*', function ($event = null, $data = null) {
-          if ($event == 'Illuminate\Foundation\Http\Events\RequestHandled' && $data) {
-            $request = $data[0];
+        $app['events']->listen('Illuminate\Foundation\Http\Events\RequestHandled', function ($event = null) {
+          if ($event){
+            $request = $event;
             $maxLength = 1000;
             if (strlen($request->response->getContent()) > $maxLength) {
               $data = substr($request->response->getContent(), 0, $maxLength);
@@ -34,14 +38,20 @@ class LaravelResponseHandler extends ResponseHandler
             }
             $this->response = $data;
           }
-
         });
     }
 
 
     private function parseView($data)
     {
-        if (is_object($data[0])){
+        if (is_a($data, \Illuminate\View\View::class)) {
+            $this->views[] = [
+                'name' => $data->getName(),
+                'path' => $data->getPath()
+            ];
+
+        }
+        if (is_array($data) && isset($data[0]) && is_a($data, \Illuminate\View\View::class)){
           $this->views[] = [
             'name' => $data[0]->getName(),
             'path' => $data[0]->getPath()

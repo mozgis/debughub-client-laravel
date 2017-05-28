@@ -30,7 +30,9 @@ class DebughubServiceProvider extends ServiceProvider
     public function register()
     {
         $this->configure();
-        new LaravelDebugger($this->app, $this->config);
+        if ($this->config->enabled) {
+          new LaravelDebugger($this->app, $this->config);
+        }
 
 
 
@@ -47,6 +49,7 @@ class DebughubServiceProvider extends ServiceProvider
         $this->config->setEndpoint($this->app->config->get('debughub.endpoint'));
         $this->config->setGitRoot($this->app->config->get('debughub.git_root'));
         $this->config->setBlacklistParams($this->app->config->get('debughub.blacklist_params'));
+        $this->config->setEnabled($this->app->config->get('debughub.enabled'));
 
     }
 
