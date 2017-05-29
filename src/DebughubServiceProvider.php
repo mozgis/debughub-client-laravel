@@ -30,7 +30,7 @@ class DebughubServiceProvider extends ServiceProvider
     public function register()
     {
         $this->configure();
-        if ($this->config->enabled) {
+        if ($this->config->getEnabled()) {
           new LaravelDebugger($this->app, $this->config);
         }
 
