@@ -39,13 +39,16 @@ class ResponseHandler implements Reportable
     protected function getGitBranchName()
     {
         $shellOutput = [];
-        exec('git branch | ' . "grep ' * '", $shellOutput);
-        foreach ($shellOutput as $line) {
-            if (strpos($line, '* ') !== false) {
-                $this->gitBranchName = trim(strtolower(str_replace('* ', '', $line)));
+        $this->gitBranchName = null;
+        if (!empty($this->config->getGitRoot())) {
+            exec('cd "'.$this->config->getGitRoot().'" &&  git branch | ' . "grep ' * '", $shellOutput);
+            foreach ($shellOutput as $line) {
+                if (strpos($line, '* ') !== false) {
+                    $this->gitBranchName = trim(strtolower(str_replace('* ', '', $line)));
+                }
             }
         }
-        $this->gitBranchName = null;
     }
+
 
 }
