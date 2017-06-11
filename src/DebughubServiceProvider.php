@@ -2,9 +2,6 @@
 
 namespace Debughub\Client;
 
-use Illuminate\Contracts\Http\Kernel;
-use Illuminate\Routing\Route;
-use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 
 
@@ -19,7 +16,16 @@ class DebughubServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-
+        $this->app->singleton('debughub', function () {
+            $debugger = new Debugger($this->config);
+            $debugger->logHandler = new Handlers\LogHandler();
+            $debugger->queryHandler = new Handlers\LaravelQueryHandler($this->app);
+            $debugger->exceptionHandler = new Handlers\LaravelExceptionHandler($this->app);
+            $debugger->requestHandler = new Handlers\LaravelRequestHandler($this->config, $this->app);
+            $debugger->responseHandler = new Handlers\LaravelResponseHandler($this->config, $this->app);
+            $debugger->registerShutdown();
+            return $debugger;
+        });
     }
 
     /**
@@ -30,9 +36,7 @@ class DebughubServiceProvider extends ServiceProvider
     public function register()
     {
         $this->configure();
-        if ($this->config->getEnabled()) {
-          new LaravelDebugger($this->app, $this->config);
-        }
+
 
 
 
@@ -53,5 +57,13 @@ class DebughubServiceProvider extends ServiceProvider
 
     }
 
-
+    /**
+     * Get the services provided by the provider.
+     *
+     * @return array
+     */
+    public function provides()
+    {
+        return ['debughub'];
+    }
 }

@@ -52,7 +52,6 @@ class Debugger
           'data' =>[
               'start_time' => $this->startTime,
               'end_time' => $endTime,
-              'queries' => $this->queryHandler->getData(),
               'exceptions' => $this->exceptionHandler->getData(),
               'logs' => $this->logHandler->getData(),
               'request' => $this->requestHandler->getData(),
@@ -68,5 +67,17 @@ class Debugger
     {
       list($usec, $sec) = explode(" ", $time);
       return ((float)$usec + (float)$sec);
+    }
+
+    public function log($data = '', $name = 'info'){
+        $this->logHandler->addLog($data, $name);
+    }
+
+    public function startBlock($name = null) {
+
+    }
+
+    public function stopBlock() {
+
     }
 }
