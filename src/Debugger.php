@@ -47,11 +47,11 @@ class Debugger
         $timeStartFloat = $this->microtimeFloat($this->startTime);
         $timeEndFloat = $this->microtimeFloat($endTime);
         $duration = $timeEndFloat - $_SERVER['REQUEST_TIME_FLOAT'];
-
         return [
           'data' =>[
               'start_time' => $this->startTime,
               'end_time' => $endTime,
+              'queries' => $this->queryHandler->getData(),
               'exceptions' => $this->exceptionHandler->getData(),
               'logs' => $this->logHandler->getData(),
               'request' => $this->requestHandler->getData(),
@@ -74,10 +74,11 @@ class Debugger
     }
 
     public function startBlock($name = null) {
-
+        $this->logHandler->addLog([], $name, 'start_block');
     }
 
     public function stopBlock() {
+        $this->logHandler->addLog([], null, 'end_block');
 
     }
 }
