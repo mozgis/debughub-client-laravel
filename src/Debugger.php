@@ -49,7 +49,8 @@ class Debugger
         $duration = $timeEndFloat - $_SERVER['REQUEST_TIME_FLOAT'];
         return [
           'data' =>[
-              'start_time' => $this->startTime,
+              'boot_time' => $this->startTime,
+              'start_time' => $_SERVER['REQUEST_TIME_FLOAT'],
               'end_time' => $endTime,
               'queries' => $this->queryHandler->getData(),
               'exceptions' => $this->exceptionHandler->getData(),
