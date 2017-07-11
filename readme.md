@@ -11,22 +11,13 @@ For now laravel 5.x only.
 `Debughub\Client\DebughubServiceProvider::class`
 
 3. create new config file in config dir with content:
-`
-<?php
-
+`<?php
 return [
-
     'api_key' => '',
-    
     'project_key' => '',
-    
     'git_root' => '',
-    
     'enabled' => true,
-    
     'blacklist_params' => [
         'password'
-    ]
-    
-];
-`
+    ]  
+];`
