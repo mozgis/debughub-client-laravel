@@ -16,8 +16,8 @@ return [
     'api_key' => '',
     'project_key' => '',
     'git_root' => '',
+    'enabled' => true,
     'blacklist_params' => [
         'password'
-    ]
-];
-`
+    ]  
+];`
