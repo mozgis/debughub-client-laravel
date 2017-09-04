@@ -16,17 +16,20 @@ class DebughubServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $debugger = new Debugger($this->config);
-        $debugger->logHandler = new Handlers\LogHandler();
-        $debugger->queryHandler = new Handlers\LaravelQueryHandler($this->app);
-        $debugger->exceptionHandler = new Handlers\LaravelExceptionHandler($this->app);
-        $debugger->requestHandler = new Handlers\LaravelRequestHandler($this->config, $this->app);
-        $debugger->responseHandler = new Handlers\LaravelResponseHandler($this->config, $this->app);
-        $debugger->registerShutdown();
+        if ($this->config->getEnabled()) {
+            $debugger = new Debugger($this->config);
+            $debugger->logHandler = new Handlers\LogHandler();
+            $debugger->queryHandler = new Handlers\LaravelQueryHandler($this->app);
+            $debugger->exceptionHandler = new Handlers\LaravelExceptionHandler($this->app);
+            $debugger->requestHandler = new Handlers\LaravelRequestHandler($this->config, $this->app);
+            $debugger->responseHandler = new Handlers\LaravelResponseHandler($this->config, $this->app);
+            $debugger->registerShutdown();
 
-        $this->app->singleton('debughub', function () use($debugger) {
-            return $debugger;
-        });
+            $this->app->singleton('debughub', function () use($debugger) {
+                return $debugger;
+            });
+        }
+
     }
 
     /**
@@ -37,9 +40,6 @@ class DebughubServiceProvider extends ServiceProvider
     public function register()
     {
         $this->configure();
-
-
-
 
     }
 
